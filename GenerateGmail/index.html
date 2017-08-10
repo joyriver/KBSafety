@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Basic TextBox - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="template.js" charset="gb2312"></script>
+	<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+	var brandname;
+    $(document).ready(function(){
+	$("#clab").click(function(){
+		$.post("getTemplateNumber.php",{
+			itemid:$('#itemid').val()
+		},
+		function(data,status){
+		//   var json = eval('(' + data + ')');
+			//var telp1= data1.substring('1');
+//			alert("模板编号: \n" + data + "\n状态: " + status);
+			var obj = JSON.stringify(data);
+			var obj1=eval(obj);
+//			alert("模板编号: \n" + obj1 + "\n状态: " + status);
+			
+//			alert("模板编号: \n" + obj1 + "\n状态: " + status);
+		//	myFunction('t2',obj1);
+		
+			
+			var accountName = obj1.match(/"ACC":(\S*),"ReceiveDate"/)[1];
+			alert("accountName的值为:"+accountName);
+			accountName = accountName.replace(/\"/g,'');
+			
+			$.post("getSellerInformation.php",{
+			Accountid: accountName	
+		},
+		function(data,status){
+		//   var json = eval('(' + data + ')');
+			//var telp1= data1.substring('1');
+//			alert("模板编号: \n" + data + "\n状态: " + status);
+			var obj2 = JSON.stringify(data);
+			var obj3=eval(obj2);
+//			alert("模板编号obj3: \n" + obj3 + "\n状态: " + status);
+//			alert("模板编号obj1: \n" + obj1 + "\n状态: " + status);
+//			alert("模板编号: \n" + obj1 + "\n状态: " + status);
+			myFunction('t2',obj1,obj3);
+		});
+		});
+	});
+    });
+     </script>
+	<script>
+	    function temptest(){
+		 alert('abc');
+	}
+	</script>
+	
+	<script>
+	function myFunction(y,obj1,obj3){
+	
+	var FirstEmail = obj1.match(/"FirstEmail":"T(\S*)","Note":/)[1];
+//	alert("FirstEmail:"+FirstEmail);
+    var ReceiveDate = obj1.match(/"ReceiveDate":(\S*),"OwnerEmail"/)[1];
+	ReceiveDate = ReceiveDate.replace(/\\/g,'');
+//	alert("ReceiveDate:"+ReceiveDate);
+	var keyword1 = $('#keyword').val();
+//	alert("keyword1:"+keyword1);
+	var keyword2 = obj1.match(/"BrandName":(\S*),"FirstEmail"/)[1];
+//	alert("keyword2:"+keyword2);
+	var ROName = obj1.match(/"OwnerName":([\s\S]*),"ASIN"/)[1];
+//	alert("ROName:"+ROName);
+	var ROEmail = obj1.match(/"OwnerEmail":"([\s\S]*)","OwnerName"/)[1];
+//	alert("ROEmail:"+ROEmail);
+	var ASIN = obj1.match(/"ASIN":([\s\S]*),"Type"/)[1];
+//	alert("ASIN:"+ASIN);
+	var title = keyword2;
+	var AmazonEmail = $('#AmazonEmail').val();
+//	alert("AmazonEmail:"+AmazonEmail);
+	var accountName = obj1.match(/"ACC":([\s\S]*),"ReceiveDate"/)[1];
+//	alert("accountName:"+accountName);
+	var IDI = $('#itemid').val();
+	var Space = "  ";
+//	alert("IDI:"+IDI);
+	
+	var infrigement = IDI + Space + accountName + Space + ReceiveDate + Space + ROEmail + Space;
+//	alert("infrigement:"+infrigement);
+	
+	var StoreManagerName = obj3.match(/"ManagerName":([\s\S]*),"StoreID"/)[1];
+//	alert("StoreManagerName:"+StoreManagerName);
+	
+	var StoreName = obj3.match(/"StoreName":"([\s\S]*)","OR":/)[1];
+	
+//	alert("StoreName:"+StoreName);
+//	alert("例子信息 ");
+	var SellerEmail= obj3.match(/"SellerGmail":"([\s\S]*)","ManagerName"/)[1];
+//	alert("SellerEmail:"+SellerEmail);
+	
+//	alert("例子信息 ");
+//	var result = Template6("l","a","b","c","d","e","f","g","h","i","j","k");
+    if(FirstEmail==='0'){
+	var result= Template0(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='1'){
+	var result= Template1(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='2'){
+	var result= Template2(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='3'){
+	var result= Template3(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='4'){
+	var result= Template4(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='5'){
+	var result= Template5(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='6'){
+	var result= Template6(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='7'){
+	var result= Template7(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	 if(FirstEmail==='8'){
+	var result= Template8(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='9'){
+	var result= Template9(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='10'){
+	var result= Template10(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='11'){
+	var result= Template11(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='12'){
+	var result= Template12(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='13'){
+	var result= Template13(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='14'){
+	var result= Template14(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='15'){
+	var result= Template15(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='16'){
+	var result= Template16(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='17'){
+	var result= Template17(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='100'){
+	var result= Template100(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='101'){
+	var result= Template101(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='102'){
+	var result= Template102(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='103'){
+	var result= Template103(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+	if(FirstEmail==='104'){
+	var result= Template104(keyword1,keyword2,infrigement,ROName,ROEmail,StoreManagerName,StoreName,ASIN,title,  AmazonEmail,SellerEmail,accountName);
+	document.getElementById(y).innerHTML = result;
+	}
+		// Template0("l","a","b","c","d","e","f","g","h","i","j","k");
+	}
+	</script>
+
+</head>
+<body>
+
+	<h2>自动邮件模板平台</h2>
+	<p>The textbox allows a user to enter information.</p>
+	<div style="margin:20px 0;"></div>
+	<div class="easyui-panel" title="Register" style="width:400px;padding:30px 60px">
+		<div style="margin-bottom:20px">
+			<div>Keyword:</div>
+			<input class="easyui-textbox" id="keyword" data-options="prompt:'Enter a email address...',validType:'email'" style="width:100%;height:32px">
+		</div>
+		<div style="margin-bottom:20px">
+			<div>Infringement No:</div>
+			<input class="easyui-textbox" name="txt_book"  id="itemid" style="width:100%;height:32px">
+		</div>
+		<div style="margin-bottom:20px">
+			<div>AmazonEmail:</div>
+			<input class="easyui-textbox" id ="AmazonEmail" style="width:100%;height:32px">
+		</div>
+	
+	
+	<button  id="clab" name="Submit" type="button">生成模板</button>	
+	
+<!--	
+ <input type="submit" name="Submit" value="GenerateGmail" onClick="myFunction('t2','<script>document.write(a)</script>')">
+<script  type="text/javascript">
+    window.onload = function(){
+    temptest();
+    };
+	myFunction('t2','10')
+	<button id="clab" name="Submit" type="button" right="16px" onClick="myFunction('t2','10');">生成模板</button>	
+ </script>   -->
+
+	</div>
+	<div id="t2" contenteditable="true">这是一段可编辑的段落。请试着编辑该文本。</div>
+	
+</body>
+</html>

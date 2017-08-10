@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="jquery,ui,easy,easyui,web">
+	<meta name="description" content="easyui help you build your web page easily!">
+	<title>Build CRUD DataGrid with jQuery EasyUI - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+	<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.edatagrid.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#dg').edatagrid({
+				url: 'get_users.php',
+				saveUrl: 'save_user.php',
+				updateUrl: 'update_user.php',
+				destroyUrl: 'destroy_user.php'
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		function doSearch(){
+			$('#tt').datagrid('load',{
+				itemid: $('#itemid').val(),
+				ACCid: $('#ACCid').val(),	
+				productid: $('#productid').val(),
+				ReceiveDateid: $('#ReceiveDateid').val()
+			});
+		}
+	</script>
+</head>
+<body>
+	<h2>侵权工作平台</h2>
+	<div class="demo-info" style="margin-bottom:14px, border:solid">
+		<div class="demo-tip icon-tip">&nbsp;</div>
+		<div >功能一：新建、编辑、删除，撤销记录。</div>
+	</div>
+	
+	<table id="dg" title="My Users" style="width:700px;height:250px" 
+			toolbar="#toolbar" pagination="true" idField="id"
+			rownumbers="true" fitColumns="true" singleSelect="true"
+			>
+		<thead>
+			<tr>
+				<th field="ID" width="50" editor="{type:'validatebox',options:{required:true}}">ID</th>
+				<th field="ACC" width="50" editor="{type:'validatebox',options:{required:true}}">ACC</th>
+				<th field="ReceiveDate" width="50" editor="text">ReceiveDate</th>
+				<th field="OwnerEmail" width="50" editor="{type:'validatebox',options:{validType:'email'}}">OwnerEmail</th>
+				<th field="OwnerName" width="50" editor="{type:'validatebox',options:{required:true}}">OwnerName</th>
+				<th field="FirstEmail" width="50" editor="{type:'validatebox',options:{required:true}}">FirstEmail</th>
+				<th field="ComplaintWithdrawn" width="50" editor="{type:'validatebox',options:{required:true}}">ComplaintWithdrawn</th>
+				<th field="Comment" width="50" editor="{type:'validatebox',options:{required:true}}">Comment</th>
+			</tr>
+		</thead>
+	</table>
+	<div class="demo-info" style="margin-bottom:14px" style="border:thick">
+		<div class="demo-tip icon-tip">&nbsp;</div>
+		<div><br><br>功能二：根据关键词，查询记录。</div>
+	</div>
+	<table id="tt" class="easyui-datagrid" style="width:700px;height:250px"
+			url="datagrid24_getdata.php"
+			title="Searching" iconCls="icon-search" toolbar="#tb" idField="id" singleSelect="true"
+			rownumbers="true" pagination="true" fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ID" width="50" editor="{type:'validatebox',options:{required:true}}">ID</th>
+				<th field="ACC" width="50" editor="{type:'validatebox',options:{required:true}}">ACC</th>
+				<th field="ReceiveDate" width="50" editor="{type:'validatebox',options:{required:true}}">ReceiveDate</th>
+				<th field="OwnerEmail" width="50" editor="{type:'validatebox',options:{validType:'email'}}">OwnerEmail</th>
+				<th field="OwnerName" width="50" editor="{type:'validatebox',options:{required:true}}">OwnerName</th>
+				<th field="FirstEmail" width="50" editor="{type:'validatebox',options:{required:true}}">FirstEmail</th>
+				<th field="ComplaintWithdrawn" width="50" editor="{type:'validatebox',options:{required:true}}">ComplaintWithdrawn</th>
+				<th field="Comment" width="50" editor="{type:'validatebox',options:{required:true}}">Comment</th>
+			</tr>
+		</thead>
+	</table>
+	
+	<div id="toolbar">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onClick="javascript:$('#dg').edatagrid('addRow')">New</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onClick="javascript:$('#dg').edatagrid('destroyRow')">Destroy</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onClick="javascript:$('#dg').edatagrid('saveRow')">Save</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onClick="javascript:$('#dg').edatagrid('cancelRow')">Cancel</a></br>
+	</div>
+	
+	<div id="tb" style="padding:2px">
+		<span>IDS:&nbsp;</span>
+		<input id="itemid" style="line-height:26px;border:1px solid #ccc">	
+		<span>OwnerEmail:</span>
+		<input id="productid" style="line-height:26px;border:1px solid #ccc">
+		<br>
+		<span>ACC:</span>
+		<input id="ACCid" style="line-height:26px;border:1px solid #ccc">
+        <span>ReceiveDate:</span>
+		<input id="ReceiveDateid" style="line-height:26px;border:1px solid #ccc">		
+		<a href="#" class="easyui-linkbutton" plain="true" onClick="doSearch()">Search</a>
+	</div>
+	
+	<form method="post" action="">  
+            <table>  
+                <tr>  
+                    <td>请输入用户名：<input type="text" name="username"></td>  
+                </tr>    
+                <tr>  
+                    <td>请输入密码：    <input type="password" name="password"></td>  
+                </tr>  
+                <tr>  
+                    <td>请确认密码：    <input type="password" name="repassword"></td>  
+                </tr>  
+        
+                <tr>  
+                    <td><input type="submit" value="注册">    <input type="reset" value="重置"></td>        
+                </tr>  
+            </table>  
+        </form>  
+	
+</body>
+</html>

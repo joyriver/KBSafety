@@ -1,0 +1,1 @@
+ copy /y C:\IdeaManRnD\Alert\Security\db\orderman.db C:\AppServ\www\KBSafety
